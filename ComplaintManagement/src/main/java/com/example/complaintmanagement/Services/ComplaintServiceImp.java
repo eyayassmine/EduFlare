@@ -3,6 +3,8 @@ package com.example.complaintmanagement.Services;
 import com.example.complaintmanagement.Entities.Complaint;
 import com.example.complaintmanagement.Repositories.ComplaintRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 @Transactional
+@RequiredArgsConstructor
 public class ComplaintServiceImp implements IComplaintService{
 
     @Autowired
