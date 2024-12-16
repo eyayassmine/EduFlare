@@ -115,5 +115,40 @@ public class ComplaintServiceImp implements IComplaintService{
         }
     };
 
+    @Override
+    public List<Complaint> SortComplaintPriority() {
+        return complaintr.findAllByOrderByPriorityAsc();
+    }
+
+    @Override
+    public List<Complaint> SortComplaintLUpdatedDate() {
+        return null;
+    }
+
+    @Override
+    public List<Complaint> SortComplaintCreateDate() {
+        return complaintr.findAllByCreatedDateAsc();
+    }
+
+    @Override
+    public List<Complaint> searchComplaints(String searchText) {
+        return null;
+    }
+
+    @Override
+    public List<Complaint> searchComplaintsStatus(String searchText) {
+        return complaintr.findComplaintsByStatus(searchText);
+    }
+
+    @Override
+    public List<Complaint> searchComplaintsCategory(String searchText) {
+        return complaintr.findComplaintsByComplaintCategory(searchText);
+    }
+
+    @Override
+    public List<Complaint> filterComplaints(String filterText) {
+        return complaintr.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(filterText, filterText);
+
+    }
 
 }

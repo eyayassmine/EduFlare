@@ -16,5 +16,14 @@ public interface IComplaintService {
 
     void deleteComplaint(Long id);
     String uploadPhoto(Long id, MultipartFile file);
+    List<Complaint> SortComplaintPriority();
 
+    List<Complaint> SortComplaintLUpdatedDate();
+    List<Complaint> SortComplaintCreateDate();
+    List<Complaint> searchComplaints(String searchText);
+    List<Complaint> searchComplaintsStatus(String searchText);
+
+    List<Complaint> searchComplaintsCategory(String searchText);
+
+    List<Complaint> filterComplaints(String filterText);
 }

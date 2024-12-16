@@ -4,6 +4,7 @@ import com.example.complaintmanagement.Entities.Complaint;
 import com.example.complaintmanagement.Services.ComplaintServiceImp;
 import com.example.complaintmanagement.Services.IComplaintService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -94,6 +95,39 @@ public class ComplaintController {
     public byte[] getPhoto(@PathVariable("filename") String filename) throws IOException
     {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
+    }
+
+
+    @GetMapping("/retrieve-sort-priorityAsc")
+    @ResponseBody
+    public List<Complaint> SortComplaintsByPriority() {
+
+        return complaintService.SortComplaintPriority();
+    }
+
+    @GetMapping("/retrieve-sort-createdateAsc")
+    @ResponseBody
+    public List<Complaint> SortComplaintsByCreatedDate() {
+        return complaintService.SortComplaintCreateDate();
+    }
+
+    @GetMapping("/search-Status")
+    public ResponseEntity<List<Complaint>> filterComplaintsStatus(@RequestParam String searchText) {
+        List<Complaint> filteredComplaints = complaintService.searchComplaintsStatus(searchText);
+        return new ResponseEntity<>(filteredComplaints, HttpStatus.OK);
+    }
+
+    @GetMapping("/search-category")
+    public ResponseEntity<List<Complaint>> filterComplaintsCategory(@RequestParam String searchText) {
+        List<Complaint> filteredComplaints = complaintService.searchComplaintsCategory(searchText);
+        return new ResponseEntity<>(filteredComplaints, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/filter-title-description")
+    public ResponseEntity<List<Complaint>> filterComplaintsTitleDescription(@RequestParam String searchText) {
+        List<Complaint> filteredComplaints = complaintService.filterComplaints(searchText);
+        return new ResponseEntity<>(filteredComplaints, HttpStatus.OK);
     }
 
 
