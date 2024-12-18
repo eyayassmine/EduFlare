@@ -29,13 +29,15 @@ public class ComplaintServiceImp implements IComplaintService{
 
     @Autowired
     ComplaintRepository complaintr;
-
+    @Autowired
+    private BadWordsFilterService badWordsFilterService;
 
     @Override
     public Complaint addComplaint(Complaint complaint) {
         complaint.setStatus(0);             // Set status to 0 by default
         complaint.setCreatedDate(new Date()); // Set createdDate to current date
-
+        complaint.setTitle(badWordsFilterService.censorBadWords(complaint.getTitle()));
+        complaint.setDescription(badWordsFilterService.censorBadWords(complaint.getDescription()));
         return complaintr.save(complaint);    }
 
     @Override
@@ -57,6 +59,8 @@ public class ComplaintServiceImp implements IComplaintService{
             return null;
         }
         Complaint existingComplaint = complaintr.findById(id).orElse(null);
+        existingComplaint.setTitle(badWordsFilterService.censorBadWords(complaint.getDescription()));
+        existingComplaint.setDescription(badWordsFilterService.censorBadWords(complaint.getDescription()));
         existingComplaint.setUpdatedDate(new Date()); // Set updatedDate to current date
         // Set the ID of the project to ensure it's updated properly
         existingComplaint.setId(id);
